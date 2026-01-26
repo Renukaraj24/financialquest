@@ -2,95 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
+    /* Core gradient colors - Purple to Violet */
+    --gradient-start: 231 75% 60%;
+    --gradient-end: 270 50% 50%;
+    
+    /* Main background - the gradient */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222 47% 11%;
 
+    /* Card surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Main brand purple */
+    --primary: 231 75% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Light purple tint */
+    --secondary: 231 70% 96%;
+    --secondary-foreground: 231 75% 40%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted surfaces */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Hover states */
+    --accent: 231 70% 96%;
+    --accent-foreground: 231 75% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Destructive - Errors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Success */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Borders and inputs */
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 231 75% 60%;
 
+    --radius: 0.75rem;
+
+    /* Sidebar colors (matching theme) */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
+    --sidebar-primary: 231 75% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 231 70% 96%;
+    --sidebar-accent-foreground: 231 75% 40%;
     --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 231 75% 60%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --gradient-start: 231 75% 50%;
+    --gradient-end: 270 50% 40%;
+    
+    --background: 222 47% 6%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 47% 8%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 231 75% 65%;
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 231 75% 65%;
+
+    --sidebar-background: 240 6% 10%;
+    --sidebar-foreground: 240 5% 96%;
+    --sidebar-primary: 231 76% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 231 91% 60%;
   }
 }
 
@@ -102,4 +115,151 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Gradient background utility */
+  .bg-gradient-game {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gradient-start)) 0%,
+      hsl(var(--gradient-end)) 100%
+    );
+  }
+}
+
+@layer components {
+  /* Game card container */
+  .game-card {
+    @apply bg-card rounded-2xl p-8 md:p-10 shadow-2xl w-full max-w-md mx-auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Primary gradient button */
+  .btn-gradient {
+    @apply relative overflow-hidden font-semibold text-primary-foreground py-3.5 px-6 rounded-lg transition-all duration-200;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gradient-start)) 0%,
+      hsl(var(--gradient-end)) 100%
+    );
+  }
+
+  .btn-gradient:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px hsla(var(--gradient-start), 0.4);
+  }
+
+  .btn-gradient:active {
+    transform: translateY(0);
+  }
+
+  .btn-gradient:disabled {
+    @apply opacity-60 cursor-not-allowed;
+    transform: none;
+  }
+
+  /* Secondary outline button */
+  .btn-outline-primary {
+    @apply font-semibold py-3.5 px-6 rounded-lg border-2 transition-all duration-200;
+    color: hsl(var(--gradient-start));
+    border-color: hsl(var(--gradient-start));
+    background: transparent;
+  }
+
+  .btn-outline-primary:hover {
+    @apply bg-secondary;
+  }
+
+  /* Text button */
+  .btn-text {
+    @apply font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 text-muted-foreground;
+    background: transparent;
+  }
+
+  .btn-text:hover {
+    color: hsl(var(--gradient-start));
+  }
+
+  /* Form input styling */
+  .form-input {
+    @apply w-full px-4 py-3 border-2 border-input rounded-lg text-base transition-colors duration-200 bg-background;
+  }
+
+  .form-input:focus {
+    @apply outline-none;
+    border-color: hsl(var(--gradient-start));
+  }
+
+  .form-input::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  /* Form label */
+  .form-label {
+    @apply block mb-2 font-medium text-sm text-foreground;
+  }
+
+  /* Radio/Checkbox label container */
+  .option-label {
+    @apply flex items-center cursor-pointer p-2.5 rounded-lg transition-colors duration-200;
+  }
+
+  .option-label:hover {
+    @apply bg-secondary;
+  }
+
+  .option-label input {
+    @apply w-5 h-5 mr-3 cursor-pointer shrink-0;
+    accent-color: hsl(var(--gradient-start));
+  }
+
+  .option-label span {
+    @apply text-sm text-foreground;
+  }
+
+  /* Budget summary box */
+  .budget-summary {
+    @apply bg-muted rounded-lg p-4 mb-6 border-2 border-input;
+  }
+
+  /* Error message box */
+  .error-box {
+    @apply bg-destructive/10 text-destructive p-3 rounded-lg mb-4 text-sm text-center border border-destructive/30;
+  }
+
+  /* Success message box */
+  .success-box {
+    @apply p-3 rounded-lg mb-4 text-sm text-center border;
+    background: hsla(var(--success), 0.1);
+    color: hsl(var(--success));
+    border-color: hsla(var(--success), 0.3);
+  }
+
+  /* Title gradient text */
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gradient-start)) 0%,
+      hsl(var(--gradient-end)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Screen fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
 }
