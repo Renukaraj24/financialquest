@@ -4,14 +4,16 @@ import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { calculateBudgetFromIncomeRange, formatCurrency } from '@/lib/storage';
 import type { BudgetAllocation } from '@/types/user';
+import { motion } from 'framer-motion';
+import { Wallet, PiggyBank, ArrowRight } from 'lucide-react';
 
 const BUDGET_CATEGORIES = [
-  { key: 'food', label: 'Food' },
-  { key: 'travel', label: 'Travel' },
-  { key: 'mobile', label: 'Mobile / Internet' },
-  { key: 'entertainment', label: 'Entertainment' },
-  { key: 'education', label: 'Education' },
-  { key: 'other', label: 'Other' },
+  { key: 'food', label: 'Food', emoji: '🍕' },
+  { key: 'travel', label: 'Travel', emoji: '✈️' },
+  { key: 'mobile', label: 'Mobile / Internet', emoji: '📱' },
+  { key: 'entertainment', label: 'Entertainment', emoji: '🎮' },
+  { key: 'education', label: 'Education', emoji: '📚' },
+  { key: 'other', label: 'Other', emoji: '✨' },
 ] as const;
 
 export default function BudgetAllocationScreen() {
@@ -28,7 +30,6 @@ export default function BudgetAllocationScreen() {
   });
   const [error, setError] = useState('');
 
-  // Calculate total budget from income range
   const incomeRange = user?.personalInfo?.incomeRange;
   const totalBudget = incomeRange ? calculateBudgetFromIncomeRange(incomeRange) : 5000;
   
@@ -37,7 +38,6 @@ export default function BudgetAllocationScreen() {
   const isValidAllocation = remaining === 0;
   const isOverBudget = remaining < 0;
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/');
@@ -57,9 +57,9 @@ export default function BudgetAllocationScreen() {
 
     if (!isValidAllocation) {
       if (isOverBudget) {
-        setError(`You have allocated ${formatCurrency(Math.abs(remaining))} more than your budget.`);
+        setError(`Oops! You're ${formatCurrency(Math.abs(remaining))} over budget! 💸`);
       } else {
-        setError(`Please allocate the remaining ${formatCurrency(remaining)} to continue.`);
+        setError(`Allocate the remaining ${formatCurrency(remaining)} to continue! 💰`);
       }
       return;
     }
@@ -78,47 +78,81 @@ export default function BudgetAllocationScreen() {
       const nextRoute = getNextRoute();
       navigate(`/${nextRoute}`);
     } else {
-      setError('Failed to save budget allocation. Please try again.');
+      setError('Oops! Something went wrong. Try again! 🔄');
     }
   };
 
   return (
     <GameLayout>
       <div className="game-card">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center text-foreground mb-2">
-          Budget Allocation
+        <motion.div 
+          className="emoji-badge mx-auto mb-6"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", bounce: 0.5 }}
+        >
+          💰
+        </motion.div>
+
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-gradient mb-2">
+          Budget Time!
         </h2>
-        <p className="text-center text-muted-foreground text-sm mb-6">
-          This is your monthly budget: <span className="font-semibold text-foreground">{formatCurrency(totalBudget)}</span>
+        <p className="text-center text-muted-foreground text-sm mb-6 flex items-center justify-center gap-2">
+          <PiggyBank className="w-4 h-4" />
+          Your budget: <span className="font-bold text-primary">{formatCurrency(totalBudget)}</span>
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {error && <div className="error-box">{error}</div>}
+          {error && (
+            <motion.div 
+              className="error-box"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {error}
+            </motion.div>
+          )}
 
           {/* Budget Summary */}
-          <div className="budget-summary">
+          <motion.div 
+            className="budget-summary"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <div className="flex justify-between items-center">
-              <span className="font-semibold text-foreground">Remaining:</span>
-              <span 
-                className="font-bold text-xl transition-colors duration-200"
+              <span className="font-bold text-foreground flex items-center gap-2">
+                <Wallet className="w-5 h-5" />
+                Remaining:
+              </span>
+              <motion.span 
+                className="font-extrabold text-xl"
+                animate={{ scale: isOverBudget ? [1, 1.1, 1] : 1 }}
+                transition={{ duration: 0.3 }}
                 style={{ 
                   color: isOverBudget 
                     ? 'hsl(var(--destructive))' 
                     : isValidAllocation 
                       ? 'hsl(var(--success))' 
-                      : 'hsl(var(--muted-foreground))' 
+                      : 'hsl(var(--primary))' 
                 }}
               >
                 {formatCurrency(Math.max(0, remaining))}
-              </span>
+                {isValidAllocation && ' ✨'}
+                {isOverBudget && ' 😅'}
+              </motion.span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Budget Categories */}
-          {BUDGET_CATEGORIES.map((category) => (
-            <div key={category.key}>
+          {BUDGET_CATEGORIES.map((category, index) => (
+            <motion.div 
+              key={category.key}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
               <label htmlFor={category.key} className="form-label">
-                {category.label}
+                {category.emoji} {category.label}
               </label>
               <input
                 type="number"
@@ -130,16 +164,18 @@ export default function BudgetAllocationScreen() {
                 placeholder="0"
                 className="form-input"
               />
-            </div>
+            </motion.div>
           ))}
 
-          <button 
+          <motion.button 
             type="submit" 
-            className="btn-gradient w-full"
+            className="btn-gradient w-full flex items-center justify-center gap-2"
             disabled={!isValidAllocation}
+            whileTap={{ scale: 0.98 }}
           >
             Continue
-          </button>
+            <ArrowRight className="w-5 h-5" />
+          </motion.button>
         </form>
       </div>
     </GameLayout>

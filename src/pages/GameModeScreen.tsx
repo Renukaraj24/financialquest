@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { Play, BookOpen, Target, BarChart3 } from 'lucide-react';
+import { Play, BookOpen, Target, BarChart3, LogOut, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface GameModeScreenProps {
   mode: 'blind' | 'learning' | 'aware' | 'results';
@@ -10,33 +11,37 @@ interface GameModeScreenProps {
 const MODE_CONFIG = {
   blind: {
     title: 'Blind Mode',
-    description: 'Make financial decisions without any prior knowledge or guidance.',
+    description: 'Make decisions without any guidance. Trust your instincts! 🎲',
     icon: Play,
-    color: 'from-orange-500 to-red-500',
-    nextLabel: 'Start Blind Mode',
+    emoji: '🎯',
+    gradient: 'from-orange-400 to-rose-400',
+    nextLabel: 'Start Adventure',
     progressKey: 'hasPlayedBlind' as const,
   },
   learning: {
     title: 'Learning Mode',
-    description: 'Learn essential financial concepts and strategies.',
+    description: 'Discover amazing financial tips and strategies! 📚',
     icon: BookOpen,
-    color: 'from-blue-500 to-cyan-500',
+    emoji: '📖',
+    gradient: 'from-cyan-400 to-blue-400',
     nextLabel: 'Start Learning',
     progressKey: 'hasCompletedLearning' as const,
   },
   aware: {
     title: 'Aware Mode',
-    description: 'Apply what you\'ve learned to make informed financial decisions.',
+    description: 'Apply your knowledge like a pro! You got this! 💪',
     icon: Target,
-    color: 'from-green-500 to-emerald-500',
-    nextLabel: 'Start Aware Mode',
+    emoji: '🎯',
+    gradient: 'from-emerald-400 to-teal-400',
+    nextLabel: 'Show Your Skills',
     progressKey: 'hasPlayedAware' as const,
   },
   results: {
     title: 'Your Results',
-    description: 'Compare your performance before and after learning!',
+    description: 'See how much you\'ve grown! Amazing progress! 🌟',
     icon: BarChart3,
-    color: 'from-purple-500 to-pink-500',
+    emoji: '🏆',
+    gradient: 'from-violet-400 to-purple-400',
     nextLabel: 'View Results',
     progressKey: null,
   },
@@ -49,7 +54,6 @@ export default function GameModeScreen({ mode }: GameModeScreenProps) {
   const config = MODE_CONFIG[mode];
   const Icon = config.icon;
 
-  // Redirect if not authenticated
   if (!isAuthenticated) {
     navigate('/');
     return null;
@@ -71,55 +75,96 @@ export default function GameModeScreen({ mode }: GameModeScreenProps) {
   return (
     <GameLayout>
       <div className="game-card text-center">
-        {/* Icon with gradient background */}
-        <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${config.color} flex items-center justify-center shadow-lg`}>
-          <Icon className="w-10 h-10 text-white" />
-        </div>
+        {/* Animated emoji header */}
+        <motion.div 
+          className="emoji-badge mx-auto mb-6"
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {config.emoji}
+        </motion.div>
 
-        <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">
+        {/* Icon with gradient background */}
+        <motion.div 
+          className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-lg`}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", bounce: 0.5, delay: 0.1 }}
+        >
+          <Icon className="w-8 h-8 text-white" />
+        </motion.div>
+
+        <h2 className="text-2xl md:text-3xl font-bold text-gradient mb-3">
           {config.title}
         </h2>
         <p className="text-muted-foreground text-base mb-8 max-w-sm mx-auto">
           {config.description}
         </p>
 
-        {/* User info */}
+        {/* User info card */}
         {user && (
-          <div className="bg-muted rounded-lg p-4 mb-6 text-left">
-            <p className="text-sm text-muted-foreground mb-1">Playing as</p>
-            <p className="font-medium text-foreground">
-              {user.personalInfo?.name || user.name || user.email || user.phone}
+          <motion.div 
+            className="budget-summary text-left"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
+              <Sparkles className="w-3 h-3" />
+              Playing as
             </p>
-          </div>
+            <p className="font-bold text-foreground">
+              {user.personalInfo?.name || user.name || user.email || user.phone} 🎮
+            </p>
+          </motion.div>
         )}
 
         {mode === 'results' ? (
-          <div className="space-y-4">
-            <div className="bg-secondary rounded-lg p-6">
-              <h3 className="font-semibold text-foreground mb-4">Congratulations! 🎉</h3>
-              <p className="text-sm text-muted-foreground">
-                You've completed all game modes. Your financial awareness has significantly improved!
+          <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="success-box">
+              <h3 className="font-bold mb-2">Congratulations! 🎉</h3>
+              <p className="text-sm">
+                You've completed all game modes! Your financial superpowers are unlocked! 💎
               </p>
             </div>
-            <button onClick={handleLogout} className="btn-outline-primary w-full">
-              Logout & Start Over
+            <button onClick={handleLogout} className="btn-outline-primary w-full flex items-center justify-center gap-2">
+              <LogOut className="w-4 h-4" />
+              Start Fresh
             </button>
-          </div>
+          </motion.div>
         ) : (
-          <div className="space-y-3">
-            <button onClick={handleComplete} className="btn-gradient w-full">
-              {config.nextLabel}
-            </button>
+          <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <motion.button 
+              onClick={handleComplete} 
+              className="btn-gradient w-full"
+              whileTap={{ scale: 0.98 }}
+            >
+              {config.nextLabel} ✨
+            </motion.button>
             <p className="text-xs text-muted-foreground">
-              (Demo: Click to simulate completing this mode)
+              Click to continue your journey 🚀
             </p>
-          </div>
+          </motion.div>
         )}
 
         {/* Logout button for non-results screens */}
         {mode !== 'results' && (
-          <button onClick={handleLogout} className="btn-text w-full mt-4">
-            Logout
+          <button 
+            onClick={handleLogout} 
+            className="btn-text w-full mt-4 flex items-center justify-center gap-2"
+          >
+            <LogOut className="w-4 h-4" />
+            Take a break
           </button>
         )}
       </div>
