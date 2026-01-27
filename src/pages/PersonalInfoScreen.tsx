@@ -5,28 +5,28 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { calculateAge } from '@/lib/storage';
 import type { PersonalInfo } from '@/types/user';
 import { motion } from 'framer-motion';
-import { User, ArrowRight } from 'lucide-react';
+import { User, ArrowRight, AlertTriangle, Shield } from 'lucide-react';
 
 const INCOME_SOURCES = [
-  { value: 'pocket-money', label: 'Pocket money', emoji: '💵' },
-  { value: 'scholarship', label: 'Scholarship', emoji: '🎓' },
-  { value: 'freelancing', label: 'Freelancing / Part-time', emoji: '💼' },
-  { value: 'family-support', label: 'Family support', emoji: '👨‍👩‍👧' },
-  { value: 'other', label: 'Other', emoji: '✨' },
+  { value: 'pocket-money', label: 'Pocket Money' },
+  { value: 'scholarship', label: 'Scholarship' },
+  { value: 'freelancing', label: 'Freelancing / Part-time' },
+  { value: 'family-support', label: 'Family Support' },
+  { value: 'other', label: 'Other' },
 ];
 
 const INCOME_RANGES = [
-  { value: 'less-than-2000', label: 'Less than ₹2,000' },
+  { value: 'less-than-2000', label: 'Under ₹2,000' },
   { value: '2000-5000', label: '₹2,000 – ₹5,000' },
   { value: '5000-10000', label: '₹5,000 – ₹10,000' },
-  { value: 'more-than-10000', label: 'More than ₹10,000' },
+  { value: 'more-than-10000', label: 'Over ₹10,000' },
 ];
 
 const EDUCATION_OPTIONS = [
-  { value: 'school-student', label: 'School Student 📚' },
-  { value: 'college-student', label: 'College Student 🎓' },
-  { value: 'postgraduate', label: 'Postgraduate 🔬' },
-  { value: 'other', label: 'Other ✨' },
+  { value: 'school-student', label: 'School Student' },
+  { value: 'college-student', label: 'College Student' },
+  { value: 'postgraduate', label: 'Postgraduate' },
+  { value: 'other', label: 'Other' },
 ];
 
 export default function PersonalInfoScreen() {
@@ -59,7 +59,7 @@ export default function PersonalInfoScreen() {
     setError('');
 
     if (!fullName || !dob || !gender || !educationStatus || !incomeRange) {
-      setError('Please fill in all required fields 💭');
+      setError('All fields required');
       return;
     }
 
@@ -77,43 +77,44 @@ export default function PersonalInfoScreen() {
       const nextRoute = getNextRoute();
       navigate(`/${nextRoute}`);
     } else {
-      setError('Oops! Something went wrong. Try again! 🔄');
+      setError('System error - retry');
     }
   };
 
   const genderOptions = [
-    { value: 'male', label: 'Male 👦' },
-    { value: 'female', label: 'Female 👧' },
-    { value: 'prefer-not-to-say', label: 'Prefer not to say 🤫' },
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'prefer-not-to-say', label: 'Classified' },
   ];
 
   return (
     <GameLayout>
-      <div className="game-card">
+      <div className="game-card scanlines">
         <motion.div 
-          className="emoji-badge mx-auto mb-6"
+          className="icon-cute mx-auto mb-4"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", bounce: 0.5 }}
         >
-          👋
+          <Shield className="w-6 h-6 text-primary-foreground" />
         </motion.div>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gradient mb-2">
-          About You
+        <h2 className="text-xl font-black text-center text-gradient mb-1 uppercase tracking-wider">
+          Profile Configuration
         </h2>
-        <p className="text-center text-muted-foreground text-sm mb-8 flex items-center justify-center gap-2">
-          <User className="w-4 h-4" />
-          Help us personalize your journey
+        <p className="text-center text-muted-foreground text-xs uppercase tracking-widest mb-6 flex items-center justify-center gap-2">
+          <User className="w-3 h-3" />
+          Initialize user parameters
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <motion.div 
-              className="error-box"
+              className="error-box flex items-center justify-center gap-2"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
+              <AlertTriangle className="w-3 h-3" />
               {error}
             </motion.div>
           )}
@@ -121,14 +122,14 @@ export default function PersonalInfoScreen() {
           {/* Full Name */}
           <div>
             <label htmlFor="fullName" className="form-label">
-              Your Name ✨
+              Operator Name
             </label>
             <input
               type="text"
               id="fullName"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="What should we call you?"
+              placeholder="Enter designation"
               required
               className="form-input"
             />
@@ -137,7 +138,7 @@ export default function PersonalInfoScreen() {
           {/* Date of Birth */}
           <div>
             <label htmlFor="dob" className="form-label">
-              Birthday 🎂
+              Birth Date
             </label>
             <input
               type="date"
@@ -151,14 +152,12 @@ export default function PersonalInfoScreen() {
 
           {/* Gender */}
           <div>
-            <label className="form-label">You are... 🌈</label>
+            <label className="form-label">Classification</label>
             <div className="space-y-2">
               {genderOptions.map((option) => (
-                <motion.label 
+                <label 
                   key={option.value} 
                   className="option-label"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   <input
                     type="radio"
@@ -169,7 +168,7 @@ export default function PersonalInfoScreen() {
                     required
                   />
                   <span>{option.label}</span>
-                </motion.label>
+                </label>
               ))}
             </div>
           </div>
@@ -177,7 +176,7 @@ export default function PersonalInfoScreen() {
           {/* Education Status */}
           <div>
             <label htmlFor="education" className="form-label">
-              Currently... 📖
+              Current Status
             </label>
             <select
               id="education"
@@ -186,7 +185,7 @@ export default function PersonalInfoScreen() {
               required
               className="form-input"
             >
-              <option value="">Select your status</option>
+              <option value="">Select status</option>
               {EDUCATION_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -197,14 +196,12 @@ export default function PersonalInfoScreen() {
 
           {/* Income Sources */}
           <div>
-            <label className="form-label">Money comes from... 💸</label>
+            <label className="form-label">Revenue Streams</label>
             <div className="space-y-2">
               {INCOME_SOURCES.map((source) => (
-                <motion.label 
+                <label 
                   key={source.value} 
                   className="option-label"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   <input
                     type="checkbox"
@@ -212,22 +209,20 @@ export default function PersonalInfoScreen() {
                     checked={incomeSources.includes(source.value)}
                     onChange={(e) => handleIncomeSourceChange(source.value, e.target.checked)}
                   />
-                  <span>{source.emoji} {source.label}</span>
-                </motion.label>
+                  <span>{source.label}</span>
+                </label>
               ))}
             </div>
           </div>
 
           {/* Income Range */}
           <div>
-            <label className="form-label">Monthly amount 💰</label>
+            <label className="form-label">Monthly Credits</label>
             <div className="space-y-2">
               {INCOME_RANGES.map((range) => (
-                <motion.label 
+                <label 
                   key={range.value} 
                   className="option-label"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   <input
                     type="radio"
@@ -238,7 +233,7 @@ export default function PersonalInfoScreen() {
                     required
                   />
                   <span>{range.label}</span>
-                </motion.label>
+                </label>
               ))}
             </div>
           </div>
@@ -249,7 +244,7 @@ export default function PersonalInfoScreen() {
             whileTap={{ scale: 0.98 }}
           >
             Continue
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </motion.button>
         </form>
       </div>

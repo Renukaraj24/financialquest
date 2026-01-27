@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { Play, BookOpen, Target, BarChart3, LogOut, Sparkles } from 'lucide-react';
+import { Play, BookOpen, Target, BarChart3, LogOut, Cpu, Zap, Shield, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface GameModeScreenProps {
@@ -10,39 +10,35 @@ interface GameModeScreenProps {
 
 const MODE_CONFIG = {
   blind: {
-    title: 'Blind Mode',
-    description: 'Make decisions without any guidance. Trust your instincts! 🎲',
-    icon: Play,
-    emoji: '🎯',
-    gradient: 'from-orange-400 to-rose-400',
-    nextLabel: 'Start Adventure',
+    title: 'Blind Protocol',
+    description: 'Make decisions without guidance. Trust your neural pathways.',
+    icon: Zap,
+    gradient: 'from-orange-500 to-red-500',
+    nextLabel: 'Initialize Mission',
     progressKey: 'hasPlayedBlind' as const,
   },
   learning: {
-    title: 'Learning Mode',
-    description: 'Discover amazing financial tips and strategies! 📚',
+    title: 'Training Mode',
+    description: 'Download financial strategies and upgrade your knowledge base.',
     icon: BookOpen,
-    emoji: '📖',
-    gradient: 'from-cyan-400 to-blue-400',
-    nextLabel: 'Start Learning',
+    gradient: 'from-cyan-400 to-blue-500',
+    nextLabel: 'Begin Training',
     progressKey: 'hasCompletedLearning' as const,
   },
   aware: {
-    title: 'Aware Mode',
-    description: 'Apply your knowledge like a pro! You got this! 💪',
+    title: 'Combat Ready',
+    description: 'Deploy your enhanced skills in the field. Execute with precision.',
     icon: Target,
-    emoji: '🎯',
-    gradient: 'from-emerald-400 to-teal-400',
-    nextLabel: 'Show Your Skills',
+    gradient: 'from-emerald-400 to-teal-500',
+    nextLabel: 'Deploy Skills',
     progressKey: 'hasPlayedAware' as const,
   },
   results: {
-    title: 'Your Results',
-    description: 'See how much you\'ve grown! Amazing progress! 🌟',
+    title: 'Mission Complete',
+    description: 'Analyze your performance metrics and achievements.',
     icon: BarChart3,
-    emoji: '🏆',
-    gradient: 'from-violet-400 to-purple-400',
-    nextLabel: 'View Results',
+    gradient: 'from-violet-400 to-purple-500',
+    nextLabel: 'View Analytics',
     progressKey: null,
   },
 };
@@ -74,32 +70,48 @@ export default function GameModeScreen({ mode }: GameModeScreenProps) {
 
   return (
     <GameLayout>
-      <div className="game-card text-center">
-        {/* Animated emoji header */}
+      <div className="game-card text-center scanlines">
+        {/* Status indicator */}
         <motion.div 
-          className="emoji-badge mx-auto mb-6"
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex items-center justify-center gap-2 mb-4 text-[10px] uppercase tracking-widest text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
-          {config.emoji}
+          <motion.span 
+            className="w-2 h-2 rounded-full bg-primary"
+            animate={{ opacity: [1, 0.3, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+          Mode Active
         </motion.div>
 
-        {/* Icon with gradient background */}
+        {/* Icon with glow */}
         <motion.div 
-          className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${config.gradient} flex items-center justify-center shadow-lg`}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", bounce: 0.5, delay: 0.1 }}
+          className={`w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br ${config.gradient}`}
+          style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ type: "spring", bounce: 0.4 }}
         >
-          <Icon className="w-8 h-8 text-white" />
+          <Icon className="w-7 h-7 text-white" />
         </motion.div>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-gradient mb-3">
+        <motion.h2 
+          className="text-xl md:text-2xl font-black text-gradient mb-2 uppercase tracking-wider"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
           {config.title}
-        </h2>
-        <p className="text-muted-foreground text-base mb-8 max-w-sm mx-auto">
+        </motion.h2>
+        <motion.p 
+          className="text-muted-foreground text-xs uppercase tracking-wider mb-6 max-w-sm mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
           {config.description}
-        </p>
+        </motion.p>
 
         {/* User info card */}
         {user && (
@@ -107,52 +119,53 @@ export default function GameModeScreen({ mode }: GameModeScreenProps) {
             className="budget-summary text-left"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.25 }}
           >
-            <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-              <Sparkles className="w-3 h-3" />
-              Playing as
-            </p>
-            <p className="font-bold text-foreground">
-              {user.personalInfo?.name || user.name || user.email || user.phone} 🎮
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="w-3 h-3 text-primary" />
+              <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                Operator ID
+              </span>
+            </div>
+            <p className="font-bold text-sm text-foreground">
+              {user.personalInfo?.name || user.name || user.email || user.phone}
             </p>
           </motion.div>
         )}
 
         {mode === 'results' ? (
           <motion.div 
-            className="space-y-4"
+            className="space-y-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="success-box">
-              <h3 className="font-bold mb-2">Congratulations! 🎉</h3>
-              <p className="text-sm">
-                You've completed all game modes! Your financial superpowers are unlocked! 💎
-              </p>
+            <div className="success-box flex items-center justify-center gap-2">
+              <Trophy className="w-4 h-4" />
+              <span>All Protocols Complete • Skills Maximized</span>
             </div>
             <button onClick={handleLogout} className="btn-outline-primary w-full flex items-center justify-center gap-2">
               <LogOut className="w-4 h-4" />
-              Start Fresh
+              Terminate Session
             </button>
           </motion.div>
         ) : (
           <motion.div 
-            className="space-y-4"
+            className="space-y-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
             <motion.button 
               onClick={handleComplete} 
-              className="btn-gradient w-full"
+              className="btn-gradient w-full flex items-center justify-center gap-2"
               whileTap={{ scale: 0.98 }}
             >
-              {config.nextLabel} ✨
+              <Play className="w-4 h-4" />
+              {config.nextLabel}
             </motion.button>
-            <p className="text-xs text-muted-foreground">
-              Click to continue your journey 🚀
+            <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+              Press to continue sequence
             </p>
           </motion.div>
         )}
@@ -163,8 +176,8 @@ export default function GameModeScreen({ mode }: GameModeScreenProps) {
             onClick={handleLogout} 
             className="btn-text w-full mt-4 flex items-center justify-center gap-2"
           >
-            <LogOut className="w-4 h-4" />
-            Take a break
+            <LogOut className="w-3 h-3" />
+            Disconnect
           </button>
         )}
       </div>

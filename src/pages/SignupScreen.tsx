@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { UserPlus, ArrowLeft } from 'lucide-react';
+import { UserPlus, ArrowLeft, AlertTriangle } from 'lucide-react';
 
 export default function SignupScreen() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function SignupScreen() {
     setError('');
 
     if (!emailOrPhone || !password) {
-      setError('Please fill in all required fields 💭');
+      setError('All fields required');
       return;
     }
 
@@ -29,64 +29,65 @@ export default function SignupScreen() {
       const nextRoute = getNextRoute();
       navigate(`/${nextRoute}`);
     } else {
-      setError(result.error || 'Failed to create account');
+      setError(result.error || 'Registration failed');
     }
   };
 
   return (
     <GameLayout>
-      <div className="game-card">
+      <div className="game-card scanlines">
         <motion.div 
-          className="emoji-badge mx-auto mb-6"
+          className="icon-cute mx-auto mb-4"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", bounce: 0.5 }}
         >
-          ✨
+          <UserPlus className="w-6 h-6 text-primary-foreground" />
         </motion.div>
 
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-gradient mb-2">
-          Join the Fun!
+        <h2 className="text-xl font-black text-center text-gradient mb-1 uppercase tracking-wider">
+          New User Registration
         </h2>
-        <p className="text-center text-muted-foreground text-sm mb-8">
-          Create your account and start learning 🎯
+        <p className="text-center text-muted-foreground text-xs uppercase tracking-widest mb-6">
+          Create your access credentials
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <motion.div 
-              className="error-box"
+              className="error-box flex items-center justify-center gap-2"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
             >
+              <AlertTriangle className="w-3 h-3" />
               {error}
             </motion.div>
           )}
           
           <div>
             <label htmlFor="name" className="form-label">
-              Your Name 💫
+              Operator Designation
             </label>
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="What should we call you?"
+              placeholder="Enter callsign"
               className="form-input"
             />
           </div>
 
           <div>
             <label htmlFor="emailOrPhone" className="form-label">
-              Email or Phone *
+              Contact ID *
             </label>
             <input
               type="text"
               id="emailOrPhone"
               value={emailOrPhone}
               onChange={(e) => setEmailOrPhone(e.target.value)}
-              placeholder="hello@example.com"
+              placeholder="Email or phone"
               required
               className="form-input"
             />
@@ -94,14 +95,14 @@ export default function SignupScreen() {
 
           <div>
             <label htmlFor="password" className="form-label">
-              Secret Password 🔐
+              Access Code *
             </label>
             <input
               type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Make it strong!"
+              placeholder="Secure password"
               minLength={6}
               required
               className="form-input"
@@ -113,8 +114,8 @@ export default function SignupScreen() {
             className="btn-gradient w-full flex items-center justify-center gap-2"
             whileTap={{ scale: 0.98 }}
           >
-            <UserPlus className="w-5 h-5" />
-            Create Account
+            <UserPlus className="w-4 h-4" />
+            Initialize Account
           </motion.button>
           
           <button
@@ -122,8 +123,8 @@ export default function SignupScreen() {
             onClick={() => navigate('/')}
             className="btn-text w-full flex items-center justify-center gap-2"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Welcome
+            <ArrowLeft className="w-3 h-3" />
+            Return to Base
           </button>
         </form>
       </div>
