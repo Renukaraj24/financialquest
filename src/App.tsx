@@ -12,6 +12,7 @@ import LoginScreen from "./pages/LoginScreen";
 import PersonalInfoScreen from "./pages/PersonalInfoScreen";
 import FinancialAwarenessScreen from "./pages/FinancialAwarenessScreen";
 import BudgetAllocationScreen from "./pages/BudgetAllocationScreen";
+import SpendingWorthDashboard from "./pages/SpendingWorthDashboard";
 import GameModeScreen from "./pages/GameModeScreen";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/personal-info" element={<PersonalInfoScreen />} />
             <Route path="/financial-awareness" element={<FinancialAwarenessScreen />} />
             <Route path="/budget-allocation" element={<BudgetAllocationScreen />} />
+            <Route path="/spending-dashboard" element={<SpendingWorthDashboard />} />
             
             {/* Game Modes */}
             <Route path="/blind-mode" element={<GameModeScreen mode="blind" />} />
