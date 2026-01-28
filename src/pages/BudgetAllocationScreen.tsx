@@ -75,8 +75,8 @@ export default function BudgetAllocationScreen() {
     };
 
     if (updateBudgetAllocation(budget)) {
-      const nextRoute = getNextRoute();
-      navigate(`/${nextRoute}`);
+      // Navigate to the spending dashboard after allocation
+      navigate('/spending-dashboard');
     } else {
       setError('System error - retry');
     }
