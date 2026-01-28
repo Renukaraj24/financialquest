@@ -14,6 +14,7 @@ import FinancialAwarenessScreen from "./pages/FinancialAwarenessScreen";
 import BudgetAllocationScreen from "./pages/BudgetAllocationScreen";
 import SpendingWorthDashboard from "./pages/SpendingWorthDashboard";
 import GameModeScreen from "./pages/GameModeScreen";
+import TrainingModeScreen from "./pages/TrainingModeScreen";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
             
             {/* Game Modes */}
             <Route path="/blind-mode" element={<GameModeScreen mode="blind" />} />
+            <Route path="/training-mode" element={<TrainingModeScreen />} />
             <Route path="/learning-mode" element={<GameModeScreen mode="learning" />} />
             <Route path="/aware-mode" element={<GameModeScreen mode="aware" />} />
             <Route path="/results" element={<GameModeScreen mode="results" />} />
