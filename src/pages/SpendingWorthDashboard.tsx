@@ -16,6 +16,7 @@ import {
   Info
 } from 'lucide-react';
 import type { BudgetAllocation } from '@/types/user';
+import { MoneyMentorInsights } from '@/components/spending-dashboard/MoneyMentorInsights';
 
 // Spending analysis utilities
 function analyzeSpending(budget: BudgetAllocation) {
@@ -454,34 +455,8 @@ export default function SpendingWorthDashboard() {
           </div>
         </motion.div>
 
-        {/* Finance Terms */}
-        {relevantTerms.length > 0 && (
-          <motion.div 
-            className="game-card scanlines bg-gradient-to-br from-purple-500/10 to-indigo-600/5 border-purple-500/20"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-          >
-            <h3 className="text-sm font-bold uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2">
-              <Info className="w-4 h-4" />
-              Relevant Concepts
-            </h3>
-            <div className="space-y-3">
-              {relevantTerms.map((item, i) => (
-                <motion.div 
-                  key={item.term}
-                  className="bg-background/30 rounded-lg p-3"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 + i * 0.1 }}
-                >
-                  <h4 className="text-sm font-bold text-purple-300 mb-1">{item.term}</h4>
-                  <p className="text-xs text-muted-foreground">{item.explanation}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
+        {/* Money Mentor Insights */}
+        <MoneyMentorInsights budget={budget} />
 
         {/* CTA Button */}
         <motion.div
