@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 // Pages
@@ -16,6 +16,11 @@ import SpendingWorthDashboard from "./pages/SpendingWorthDashboard";
 import GameModeScreen from "./pages/GameModeScreen";
 import TrainingModeScreen from "./pages/TrainingModeScreen";
 import Level1FirstPayday from "./pages/Level1FirstPayday";
+import GameDashboard from "./pages/GameDashboard";
+import BadgesDashboard from "./pages/BadgesDashboard";
+import TermsGlossary from "./pages/TermsGlossary";
+import LevelPage from "./pages/LevelPage";
+import GameComplete from "./pages/GameComplete";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,9 +44,16 @@ const App = () => (
             <Route path="/budget-allocation" element={<BudgetAllocationScreen />} />
             <Route path="/spending-dashboard" element={<SpendingWorthDashboard />} />
             
-            {/* Game Modes */}
-            <Route path="/blind-mode" element={<GameModeScreen mode="blind" />} />
+            {/* Game Dashboard & Levels */}
+            <Route path="/dashboard" element={<GameDashboard />} />
             <Route path="/level-1" element={<Level1FirstPayday />} />
+            <Route path="/level/:levelId" element={<LevelPage />} />
+            <Route path="/badges" element={<BadgesDashboard />} />
+            <Route path="/terms-glossary" element={<TermsGlossary />} />
+            <Route path="/game-complete" element={<GameComplete />} />
+            
+            {/* Legacy Game Modes */}
+            <Route path="/blind-mode" element={<GameModeScreen mode="blind" />} />
             <Route path="/training-mode" element={<TrainingModeScreen />} />
             <Route path="/learning-mode" element={<GameModeScreen mode="learning" />} />
             <Route path="/aware-mode" element={<GameModeScreen mode="aware" />} />
