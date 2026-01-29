@@ -249,7 +249,7 @@ export default function SpendingWorthDashboard() {
   const RankIcon = rankConfig.icon;
 
   const handleProceed = () => {
-    navigate('/blind-mode');
+    navigate('/level-1');
   };
 
   return (
