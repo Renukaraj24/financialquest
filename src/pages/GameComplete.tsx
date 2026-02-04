@@ -84,7 +84,7 @@ export default function GameComplete() {
             <h1 className="text-3xl font-black text-gradient uppercase tracking-wider mb-2">
               {isComplete ? 'Journey Complete!' : 'Great Progress!'}
             </h1>
-            <p className="text-lg text-primary font-bold">🏆 Money-Ready Adult</p>
+            <p className="text-lg text-primary font-bold">🏆 Money-Ready Student</p>
           </motion.div>
         </motion.div>
 
@@ -104,7 +104,7 @@ export default function GameComplete() {
               <p className="text-foreground leading-relaxed">
                 {user?.personalInfo?.name ? `${user.personalInfo.name}, ` : ''}
                 {isComplete 
-                  ? "You've completed all 10 levels! You now understand income, expenses, saving, investing, risks, scams, and wealth building. You're not an expert yet — but you know how to handle money wisely. That's a superpower!"
+                  ? "You've completed all 5 levels! You now understand income, expenses, saving, investing, risks, scams, and wealth building. You're not an expert yet — but you know how to handle money wisely. That's a superpower!"
                   : "Great job on your progress so far! Keep going to complete all levels and unlock your full financial potential."
                 }
               </p>

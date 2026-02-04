@@ -25,7 +25,7 @@ export default function GameDashboard() {
   const totalLevels = GAME_LEVELS.length;
 
   const handleContinue = () => {
-    if (progress.currentLevel <= 10) {
+    if (progress.currentLevel <= 5) {
       navigate(`/level/${progress.currentLevel}`);
     } else {
       navigate('/game-complete');
@@ -101,7 +101,7 @@ export default function GameDashboard() {
         </motion.div>
 
         {/* Continue Button */}
-        {progress.currentLevel <= 10 && (
+        {progress.currentLevel <= 5 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
