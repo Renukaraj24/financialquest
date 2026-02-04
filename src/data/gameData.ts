@@ -56,19 +56,23 @@ export interface Badge {
   levelRequired: number;
 }
 
-// All 10 levels with scenarios
+// All 5 consolidated levels with scenarios
 export const GAME_LEVELS: LevelData[] = [
-  // LEVEL 1 - First Payday
+  // LEVEL 1 - Money Basics & Spending Control (combines old Level 1 + Level 2)
   {
     id: 1,
-    name: 'First Payday',
-    theme: 'Touching money for the first time',
-    description: 'You just received ₹5,000 as your monthly allowance. Time to learn how money really works!',
+    name: 'Money Basics & Spending Control',
+    theme: 'Understanding money and controlling where it goes',
+    description: 'You just received your monthly money. Time to learn what money is and where it tends to disappear!',
     startingMoney: 5000,
-    terms: ['Income', 'Expense', 'Balance', 'Saving', 'Asset', 'Liability', 'Liquidity'],
+    terms: [
+      'Income', 'Expense', 'Balance', 'Saving', 'Asset', 'Liability', 'Liquidity',
+      'Needs', 'Wants', 'Budget', 'Impulse Spending', 'Fixed Expense', 'Variable Expense', 'Budget Leakage'
+    ],
     badge: { name: 'Money Explorer', emoji: '🏅', icon: Coins },
-    xpReward: 500,
+    xpReward: 800,
     scenarios: [
+      // From Level 1
       {
         id: 'income',
         title: 'The Monthly Allowance',
@@ -122,34 +126,6 @@ export const GAME_LEVELS: LevelData[] = [
             mentorMessage: 'Sometimes treats are fine, but notice how small choices add up over time.',
             term: 'Expense',
             termExplanation: 'Any money that leaves your wallet — for food, travel, fun, or anything else.'
-          }
-        ]
-      },
-      {
-        id: 'balance',
-        title: 'End of Week Check',
-        story: 'It\'s been a week. You\'ve spent on food, transport, and a few snacks. Do you know how much you have left?',
-        icon: Scale,
-        choices: [
-          {
-            id: 'check-balance',
-            text: 'Open the app and check',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You checked your balance. Knowing where you stand is powerful!',
-            mentorMessage: 'Checking your balance regularly prevents surprises. It\'s your financial health check.',
-            term: 'Balance',
-            termExplanation: 'The amount of money you have left after subtracting all expenses from income.'
-          },
-          {
-            id: 'guess-it',
-            text: 'I think I have enough',
-            cost: 0,
-            effect: 'negative',
-            outcome: 'Guessing might lead to unexpected problems later...',
-            mentorMessage: 'Assuming you have money without checking can lead to overspending.',
-            term: 'Balance',
-            termExplanation: 'The amount of money you have left after subtracting all expenses from income.'
           }
         ]
       },
@@ -209,48 +185,7 @@ export const GAME_LEVELS: LevelData[] = [
           }
         ]
       },
-      {
-        id: 'liquidity',
-        title: 'The Emergency',
-        story: 'Your friend needs ₹500 urgently for a medical situation. Can you help right now?',
-        icon: Heart,
-        choices: [
-          {
-            id: 'help-friend',
-            text: 'Help with available cash',
-            cost: 500,
-            effect: 'positive',
-            outcome: 'You helped immediately because you had accessible money!',
-            mentorMessage: 'Having money you can use right away saved the day. That\'s liquidity.',
-            term: 'Liquidity',
-            termExplanation: 'Having money you can access and use immediately without delay or loss.'
-          },
-          {
-            id: 'money-locked',
-            text: 'Sorry, my money is not accessible',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'You couldn\'t help because your money wasn\'t readily available.',
-            mentorMessage: 'Sometimes we have value but can\'t use it when needed. Keep some money liquid.',
-            term: 'Liquidity',
-            termExplanation: 'Having money you can access and use immediately without delay or loss.'
-          }
-        ]
-      }
-    ]
-  },
-  
-  // LEVEL 2 - Needs vs Wants
-  {
-    id: 2,
-    name: 'Needs vs Wants',
-    theme: 'Why money disappears fast',
-    description: 'Money seems to vanish! Let\'s discover why and how to control it.',
-    startingMoney: 4000,
-    terms: ['Needs', 'Wants', 'Budget', 'Impulse Spending', 'Fixed Expense', 'Variable Expense', 'Budget Leakage'],
-    badge: { name: 'Smart Chooser', emoji: '🏅', icon: ShoppingBag },
-    xpReward: 550,
-    scenarios: [
+      // From Level 2
       {
         id: 'needs',
         title: 'The Essential Purchase',
@@ -364,34 +299,6 @@ export const GAME_LEVELS: LevelData[] = [
         ]
       },
       {
-        id: 'fixed-expense',
-        title: 'The Monthly Bus Pass',
-        story: 'A monthly bus pass costs ₹600. Daily tickets cost ₹30. You travel 25 days.',
-        icon: Bus,
-        choices: [
-          {
-            id: 'buy-pass',
-            text: 'Get the monthly pass',
-            cost: 600,
-            effect: 'positive',
-            outcome: 'You saved ₹150! Monthly pass = ₹600 vs Daily = ₹750.',
-            mentorMessage: 'Fixed expenses like passes are predictable and often cheaper.',
-            term: 'Fixed Expense',
-            termExplanation: 'Expenses that stay the same each month — rent, subscriptions, passes.'
-          },
-          {
-            id: 'daily-tickets',
-            text: 'Pay daily as I go',
-            cost: 750,
-            effect: 'neutral',
-            outcome: 'You spent ₹150 extra over the month.',
-            mentorMessage: 'Variable daily costs can add up. Fixed costs are easier to plan.',
-            term: 'Fixed Expense',
-            termExplanation: 'Expenses that stay the same each month — rent, subscriptions, passes.'
-          }
-        ]
-      },
-      {
         id: 'leakage',
         title: 'The Small Spends',
         story: 'You notice: ₹20 tea, ₹30 snack, ₹50 chai with friends — every day. That\'s ₹100/day!',
@@ -422,17 +329,21 @@ export const GAME_LEVELS: LevelData[] = [
     ]
   },
 
-  // LEVEL 3 - Safety First
+  // LEVEL 2 - Safety & Growth Foundations (combines old Level 3 + Level 4)
   {
-    id: 3,
-    name: 'Safety First',
-    theme: 'Reducing stress',
-    description: 'Life throws surprises. Let\'s prepare for them!',
+    id: 2,
+    name: 'Safety & Growth Foundations',
+    theme: 'Reducing stress and making money work quietly',
+    description: 'Life throws surprises. Let\'s prepare for them AND learn how money can grow!',
     startingMoney: 6000,
-    terms: ['Emergency Fund', 'Financial Cushion', 'Rainy Day Fund', 'Cash Flow', 'Disposable Income', 'Short-term Goals', 'Long-term Goals'],
+    terms: [
+      'Emergency Fund', 'Financial Cushion', 'Rainy Day Fund', 'Cash Flow', 'Disposable Income', 'Short-term Goals', 'Long-term Goals',
+      'Investing', 'Interest', 'Compound Interest', 'Active Income', 'Passive Income', 'Opportunity Cost', 'Time Value of Money'
+    ],
     badge: { name: 'Safety Builder', emoji: '🏅', icon: Shield },
-    xpReward: 600,
+    xpReward: 1000,
     scenarios: [
+      // From Level 3
       {
         id: 'emergency-fund',
         title: 'The Phone Repair',
@@ -486,62 +397,6 @@ export const GAME_LEVELS: LevelData[] = [
             mentorMessage: 'It\'s okay sometimes, but having no cushion means living on edge.',
             term: 'Financial Cushion',
             termExplanation: 'Extra money saved beyond regular expenses to handle unexpected situations.'
-          }
-        ]
-      },
-      {
-        id: 'cash-flow',
-        title: 'The Timing Problem',
-        story: 'Rent is due on the 5th. Your allowance comes on the 10th. You have ₹200 left.',
-        icon: Clock,
-        choices: [
-          {
-            id: 'plan-ahead',
-            text: 'Note: next month, save rent money first',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You learned to match income timing with expense timing.',
-            mentorMessage: 'Cash flow is about when money comes vs when it goes. Timing matters!',
-            term: 'Cash Flow',
-            termExplanation: 'The timing of money coming in and going out. Good flow = right money at right time.'
-          },
-          {
-            id: 'panic',
-            text: 'Panic and borrow',
-            cost: 0,
-            effect: 'negative',
-            outcome: 'You managed this time, but the stress was real.',
-            mentorMessage: 'When income and expenses don\'t align, it creates cash flow problems.',
-            term: 'Cash Flow',
-            termExplanation: 'The timing of money coming in and going out. Good flow = right money at right time.'
-          }
-        ]
-      },
-      {
-        id: 'disposable-income',
-        title: 'After the Essentials',
-        story: 'From ₹6,000: ₹3,000 goes to essentials. You have ₹3,000 left. What is this money?',
-        icon: Wallet,
-        choices: [
-          {
-            id: 'understand-disposable',
-            text: 'This is my free-to-use money',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'Correct! This is your disposable income — yours to decide.',
-            mentorMessage: 'Disposable income is what\'s left after essentials. Use it wisely!',
-            term: 'Disposable Income',
-            termExplanation: 'Money left after paying for essential needs — available for savings, wants, or investing.'
-          },
-          {
-            id: 'think-its-profit',
-            text: 'I earned extra money!',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'Not extra — it\'s what remains after needs are covered.',
-            mentorMessage: 'It\'s not "extra" — it\'s disposable income, the money you control.',
-            term: 'Disposable Income',
-            termExplanation: 'Money left after paying for essential needs — available for savings, wants, or investing.'
           }
         ]
       },
@@ -600,21 +455,8 @@ export const GAME_LEVELS: LevelData[] = [
             termExplanation: 'Major financial targets years away — education, big purchases, career investments.'
           }
         ]
-      }
-    ]
-  },
-
-  // LEVEL 4 - Make Money Work
-  {
-    id: 4,
-    name: 'Make Money Work',
-    theme: 'Growth mindset',
-    description: 'Your money can grow even while you sleep. Let\'s learn how!',
-    startingMoney: 5000,
-    terms: ['Investing', 'Interest', 'Compound Interest', 'Active Income', 'Passive Income', 'Opportunity Cost', 'Time Value of Money'],
-    badge: { name: 'Growth Thinker', emoji: '🏅', icon: TrendingUp },
-    xpReward: 650,
-    scenarios: [
+      },
+      // From Level 4
       {
         id: 'investing',
         title: 'The Workshop Opportunity',
@@ -700,34 +542,6 @@ export const GAME_LEVELS: LevelData[] = [
         ]
       },
       {
-        id: 'active-income',
-        title: 'The Tutoring Gig',
-        story: 'You can tutor juniors for ₹200/hour. It takes your time and effort.',
-        icon: BookOpen,
-        choices: [
-          {
-            id: 'take-tutoring',
-            text: 'Start tutoring 5 hours/week',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You earn ₹1,000/week by actively working. Nice!',
-            mentorMessage: 'This is active income — you trade your time for money.',
-            term: 'Active Income',
-            termExplanation: 'Money earned by actively working — jobs, freelancing, services.'
-          },
-          {
-            id: 'skip-tutoring',
-            text: 'Too busy for extra work',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'That\'s okay. Active income requires time you might not have.',
-            mentorMessage: 'Active income needs effort. It\'s limited by your available time.',
-            term: 'Active Income',
-            termExplanation: 'Money earned by actively working — jobs, freelancing, services.'
-          }
-        ]
-      },
-      {
         id: 'passive-income',
         title: 'The YouTube Idea',
         story: 'Your friend earns ₹500/month from old YouTube videos. He worked once, gets paid repeatedly.',
@@ -786,17 +600,21 @@ export const GAME_LEVELS: LevelData[] = [
     ]
   },
 
-  // LEVEL 5 - Beginner Investing
+  // LEVEL 3 - Investing & Digital Money Life (combines old Level 5 + Level 6)
   {
-    id: 5,
-    name: 'Beginner Investing',
-    theme: 'Risk awareness',
-    description: 'Ready to learn how investing actually works? Let\'s start simple!',
+    id: 3,
+    name: 'Investing & Digital Money Life',
+    theme: 'Modern money usage and beginner investing',
+    description: 'Explore beginner investments and master digital payment habits!',
     startingMoney: 5000,
-    terms: ['Risk', 'Return', 'Risk-Return Tradeoff', 'Diversification', 'Mutual Fund', 'SIP', 'Index Fund'],
-    badge: { name: 'Investor in Training', emoji: '🏅', icon: TrendingUp },
-    xpReward: 700,
+    terms: [
+      'Risk', 'Return', 'Risk-Return Tradeoff', 'Diversification', 'Mutual Fund', 'SIP', 'Index Fund',
+      'UPI', 'Digital Wallet', 'Online Banking', 'Net Banking', 'Auto-Debit', 'Subscription Trap', 'Transaction History'
+    ],
+    badge: { name: 'Digital Money Master', emoji: '🏅', icon: Smartphone },
+    xpReward: 1000,
     scenarios: [
+      // From Level 5
       {
         id: 'risk',
         title: 'The Risky Bet',
@@ -822,34 +640,6 @@ export const GAME_LEVELS: LevelData[] = [
             mentorMessage: 'Wanting returns is natural, but ignoring risk is dangerous.',
             term: 'Risk',
             termExplanation: 'The chance that your investment might lose value or not grow as expected.'
-          }
-        ]
-      },
-      {
-        id: 'return',
-        title: 'The Return Question',
-        story: 'Savings account: 4% return. Stocks: 12% possible return. Which sounds better?',
-        icon: TrendingUp,
-        choices: [
-          {
-            id: 'balanced-view',
-            text: 'Higher return, but also higher risk',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'Perfect! You see both sides of the coin.',
-            mentorMessage: 'Return is what you gain. Always ask: what\'s the risk?',
-            term: 'Return',
-            termExplanation: 'The profit or growth you get from an investment, usually shown as percentage.'
-          },
-          {
-            id: 'just-higher',
-            text: '12% obviously!',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'The higher number isn\'t always better if you could lose it all.',
-            mentorMessage: 'Higher return sounds great but comes with strings attached.',
-            term: 'Return',
-            termExplanation: 'The profit or growth you get from an investment, usually shown as percentage.'
           }
         ]
       },
@@ -883,17 +673,17 @@ export const GAME_LEVELS: LevelData[] = [
       },
       {
         id: 'diversification',
-        title: 'Eggs and Baskets',
-        story: 'You have ₹2,000 to invest. Put all in one stock, or spread across 4 different investments?',
-        icon: Shield,
+        title: 'The Basket Rule',
+        story: 'Would you put all your eggs in one basket? Same with money — what if that one thing fails?',
+        icon: Coins,
         choices: [
           {
-            id: 'spread-it',
-            text: 'Spread across 4 investments',
+            id: 'spread-investments',
+            text: 'Split across different options',
             cost: 0,
             effect: 'positive',
-            outcome: 'Smart! If one fails, others can protect you.',
-            mentorMessage: 'Diversification means not putting all eggs in one basket.',
+            outcome: 'You learned diversification — the golden rule of investing!',
+            mentorMessage: 'Diversifying means spreading risk. If one fails, others protect you.',
             term: 'Diversification',
             termExplanation: 'Spreading money across different investments to reduce overall risk.'
           },
@@ -964,21 +754,8 @@ export const GAME_LEVELS: LevelData[] = [
             termExplanation: 'Systematic Investment Plan — investing a fixed amount regularly instead of lump sum.'
           }
         ]
-      }
-    ]
-  },
-
-  // LEVEL 6 - Digital Money Life
-  {
-    id: 6,
-    name: 'Digital Money Life',
-    theme: 'Convenience vs control',
-    description: 'Digital payments are everywhere! Learn to use them wisely.',
-    startingMoney: 4000,
-    terms: ['UPI', 'Digital Wallet', 'Online Banking', 'Net Banking', 'Auto-Debit', 'Subscription Trap', 'Transaction History'],
-    badge: { name: 'Digital Money Master', emoji: '🏅', icon: Smartphone },
-    xpReward: 600,
-    scenarios: [
+      },
+      // From Level 6
       {
         id: 'upi',
         title: 'The Quick Payment',
@@ -1004,34 +781,6 @@ export const GAME_LEVELS: LevelData[] = [
             mentorMessage: 'UPI leaves a record. Cash doesn\'t. Choose what works for you.',
             term: 'UPI',
             termExplanation: 'Unified Payments Interface — instant bank-to-bank transfer using phone.'
-          }
-        ]
-      },
-      {
-        id: 'wallet',
-        title: 'The App Money',
-        story: 'You have ₹500 in Paytm wallet and ₹500 in bank. Both can buy the same things.',
-        icon: Wallet,
-        choices: [
-          {
-            id: 'understand-wallet',
-            text: 'Wallet is like a digital pocket',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'Right! It\'s convenient but money sits with the company.',
-            mentorMessage: 'Digital wallets are useful but bank is safer for large amounts.',
-            term: 'Digital Wallet',
-            termExplanation: 'An app that stores money for quick payments — Paytm, PhonePe, GPay wallets.'
-          },
-          {
-            id: 'keep-in-wallet',
-            text: 'I keep most money in wallet',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'Convenient, but no interest and more risk than bank.',
-            mentorMessage: 'Keep wallet balance low. Bank is better for savings.',
-            term: 'Digital Wallet',
-            termExplanation: 'An app that stores money for quick payments — Paytm, PhonePe, GPay wallets.'
           }
         ]
       },
@@ -1118,49 +867,25 @@ export const GAME_LEVELS: LevelData[] = [
             termExplanation: 'Record of all money coming in and going out — available in banking apps.'
           }
         ]
-      },
-      {
-        id: 'net-banking',
-        title: 'The Full Access',
-        story: 'Net banking lets you transfer money, pay bills, check statements — all from your laptop.',
-        icon: Globe,
-        choices: [
-          {
-            id: 'use-netbanking',
-            text: 'Set it up securely',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You have full control of your bank from anywhere!',
-            mentorMessage: 'Net banking is powerful. Use strong passwords and 2FA.',
-            term: 'Net Banking',
-            termExplanation: 'Managing your bank account through a website — transfers, bills, statements.'
-          },
-          {
-            id: 'avoid-netbanking',
-            text: 'Too risky, I\'ll go to the bank',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'Extra safe, but less convenient. Balance is key.',
-            mentorMessage: 'Net banking is safe if you follow security practices.',
-            term: 'Net Banking',
-            termExplanation: 'Managing your bank account through a website — transfers, bills, statements.'
-          }
-        ]
       }
     ]
   },
 
-  // LEVEL 7 - Scams & Safety
+  // LEVEL 4 - Scams & Money Psychology (combines old Level 7 + Level 8)
   {
-    id: 7,
-    name: 'Scams & Safety',
-    theme: 'Protecting money',
-    description: 'Scammers are smart. But you can be smarter!',
+    id: 4,
+    name: 'Scams & Money Psychology',
+    theme: 'Protecting money and controlling emotions',
+    description: 'Scammers are smart, but your brain can play tricks too. Let\'s outsmart both!',
     startingMoney: 5000,
-    terms: ['Scam', 'Fraud', 'Phishing', 'Identity Theft', 'Fake Investment Scheme', 'Ponzi Scheme', 'Social Engineering'],
+    terms: [
+      'Scam', 'Fraud', 'Phishing', 'Identity Theft', 'Fake Investment Scheme', 'Ponzi Scheme', 'Social Engineering',
+      'Financial Discipline', 'Delayed Gratification', 'FOMO', 'Loss Aversion', 'Overconfidence Bias', 'Habit Loop', 'Decision Fatigue'
+    ],
     badge: { name: 'Scam Shield', emoji: '🏅', icon: Shield },
-    xpReward: 750,
+    xpReward: 1200,
     scenarios: [
+      // From Level 7
       {
         id: 'phishing',
         title: 'The Suspicious Link',
@@ -1273,76 +998,7 @@ export const GAME_LEVELS: LevelData[] = [
           }
         ]
       },
-      {
-        id: 'identity-theft',
-        title: 'The Public WiFi',
-        story: 'Free WiFi at café! You log into your bank app while connected.',
-        icon: Lock,
-        choices: [
-          {
-            id: 'avoid-banking',
-            text: 'Don\'t do banking on public WiFi',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You protected your identity and banking info!',
-            mentorMessage: 'Public WiFi can be monitored. Banking needs secure networks.',
-            term: 'Identity Theft',
-            termExplanation: 'When criminals steal your personal information to commit fraud in your name.'
-          },
-          {
-            id: 'quick-check',
-            text: 'Just checking balance quickly',
-            cost: 0,
-            effect: 'negative',
-            outcome: 'Hackers on the network could capture your login!',
-            mentorMessage: 'Identity theft starts with small data leaks. Stay cautious.',
-            term: 'Identity Theft',
-            termExplanation: 'When criminals steal your personal information to commit fraud in your name.'
-          }
-        ]
-      },
-      {
-        id: 'fraud',
-        title: 'The "Lucky Winner"',
-        story: 'Email: "Congratulations! You won ₹10 lakhs! Pay ₹5,000 processing fee to claim."',
-        icon: Gift,
-        choices: [
-          {
-            id: 'delete-email',
-            text: 'I didn\'t enter any contest. Delete.',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'Classic scam avoided!',
-            mentorMessage: 'You can\'t win contests you didn\'t enter. This is advance fee fraud.',
-            term: 'Fraud',
-            termExplanation: 'Intentional deception to take your money or information illegally.'
-          },
-          {
-            id: 'pay-fee',
-            text: 'Pay ₹5,000 to get ₹10 lakhs? Great deal!',
-            cost: 5000,
-            effect: 'negative',
-            outcome: 'No prize. You paid for nothing.',
-            mentorMessage: 'If you need to pay to receive a prize, it\'s fraud.',
-            term: 'Fraud',
-            termExplanation: 'Intentional deception to take your money or information illegally.'
-          }
-        ]
-      }
-    ]
-  },
-
-  // LEVEL 8 - Money Psychology
-  {
-    id: 8,
-    name: 'Money Psychology',
-    theme: 'Why we make bad decisions',
-    description: 'Your brain plays tricks on you with money. Let\'s outsmart it!',
-    startingMoney: 4500,
-    terms: ['Financial Discipline', 'Delayed Gratification', 'FOMO', 'Loss Aversion', 'Overconfidence Bias', 'Habit Loop', 'Decision Fatigue'],
-    badge: { name: 'Mindful Spender', emoji: '🏅', icon: Brain },
-    xpReward: 700,
-    scenarios: [
+      // From Level 8
       {
         id: 'fomo',
         title: 'The Group Buy',
@@ -1428,34 +1084,6 @@ export const GAME_LEVELS: LevelData[] = [
         ]
       },
       {
-        id: 'overconfidence',
-        title: 'The Sure Bet',
-        story: 'You\'re confident about a stock tip. "Can\'t fail!" — Do you put all your savings?',
-        icon: TrendingUp,
-        choices: [
-          {
-            id: 'stay-cautious',
-            text: 'Even "sure things" can fail. Only invest what I can afford to lose.',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You stayed humble and protected your savings.',
-            mentorMessage: 'Overconfidence makes us underestimate risks. Stay humble with money.',
-            term: 'Overconfidence Bias',
-            termExplanation: 'Believing you know more than you do, leading to risky decisions.'
-          },
-          {
-            id: 'go-all-in',
-            text: 'All in! I know this will work.',
-            cost: 0,
-            effect: 'negative',
-            outcome: 'When it fails, you lose everything. Ouch.',
-            mentorMessage: 'Even experts are wrong sometimes. Never bet everything.',
-            term: 'Overconfidence Bias',
-            termExplanation: 'Believing you know more than you do, leading to risky decisions.'
-          }
-        ]
-      },
-      {
         id: 'habit-loop',
         title: 'The Daily Coffee',
         story: 'Every day: Stressed → Buy coffee → Feel better → Repeat. ₹100/day = ₹3,000/month!',
@@ -1514,17 +1142,21 @@ export const GAME_LEVELS: LevelData[] = [
     ]
   },
 
-  // LEVEL 9 - Wealth Thinking
+  // LEVEL 5 - Wealth & Adult Life Readiness (combines old Level 9 + Level 10)
   {
-    id: 9,
-    name: 'Wealth Thinking',
-    theme: 'Thinking long-term',
-    description: 'Time to think like your future self. Wealth is a mindset!',
-    startingMoney: 5000,
-    terms: ['Net Worth', 'Wealth', 'Inflation', 'Purchasing Power', 'Financial Planning', 'Financial Independence', 'Financial Resilience'],
-    badge: { name: 'Future Builder', emoji: '🏅', icon: Target },
-    xpReward: 750,
+    id: 5,
+    name: 'Wealth & Adult Life Readiness',
+    theme: 'Thinking long-term and preparing for real life',
+    description: 'Time to think like your future self. You\'re almost an adult — here\'s what\'s coming!',
+    startingMoney: 10000,
+    terms: [
+      'Net Worth', 'Wealth', 'Inflation', 'Purchasing Power', 'Financial Planning', 'Financial Independence', 'Financial Resilience',
+      'Credit Score', 'Bank Charges', 'Service Fees', 'Taxes', 'Salary Slip', 'Internship Stipend', 'Freelance Earnings', 'Part-time Income', 'Financial Goals'
+    ],
+    badge: { name: 'Money-Ready Student', emoji: '🏆', icon: Trophy },
+    xpReward: 1500,
     scenarios: [
+      // From Level 9
       {
         id: 'net-worth',
         title: 'Your Total Picture',
@@ -1578,34 +1210,6 @@ export const GAME_LEVELS: LevelData[] = [
             mentorMessage: 'Inflation is natural. Your money must grow faster than inflation.',
             term: 'Inflation',
             termExplanation: 'General increase in prices that reduces what your money can buy.'
-          }
-        ]
-      },
-      {
-        id: 'purchasing-power',
-        title: 'The Real Value',
-        story: 'Your grandfather bought a house for ₹50,000 in 1980. Today, ₹50,000 can\'t even buy a scooter.',
-        icon: Home,
-        choices: [
-          {
-            id: 'understand-power',
-            text: 'Same amount, but much less power to buy things',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You understand purchasing power — the real value of money.',
-            mentorMessage: 'Purchasing power is what your money can actually buy, not the number.',
-            term: 'Purchasing Power',
-            termExplanation: 'The actual buying capacity of your money, which decreases with inflation.'
-          },
-          {
-            id: 'money-is-money',
-            text: '₹50,000 is still ₹50,000',
-            cost: 0,
-            effect: 'neutral',
-            outcome: 'The number is same, but the value changed dramatically.',
-            mentorMessage: 'Nominal value (number) vs Real value (purchasing power) — big difference!',
-            term: 'Purchasing Power',
-            termExplanation: 'The actual buying capacity of your money, which decreases with inflation.'
           }
         ]
       },
@@ -1665,48 +1269,7 @@ export const GAME_LEVELS: LevelData[] = [
           }
         ]
       },
-      {
-        id: 'resilience',
-        title: 'The Crisis Test',
-        story: 'Economic crisis hits. Jobs are lost. Those with savings, skills, and multiple income sources survive best.',
-        icon: Shield,
-        choices: [
-          {
-            id: 'build-resilience',
-            text: 'I should build multiple safety nets',
-            cost: 0,
-            effect: 'positive',
-            outcome: 'You\'re thinking about financial resilience — the ability to bounce back.',
-            mentorMessage: 'Resilience comes from diversification: skills, income, savings, investments.',
-            term: 'Financial Resilience',
-            termExplanation: 'The ability to recover from financial setbacks through preparation and adaptability.'
-          },
-          {
-            id: 'ignore-crisis',
-            text: 'That won\'t happen to me',
-            cost: 0,
-            effect: 'negative',
-            outcome: 'Everyone thinks that until it does.',
-            mentorMessage: 'Hope for the best, prepare for the worst. That\'s resilience.',
-            term: 'Financial Resilience',
-            termExplanation: 'The ability to recover from financial setbacks through preparation and adaptability.'
-          }
-        ]
-      }
-    ]
-  },
-
-  // LEVEL 10 - Adult World Prep
-  {
-    id: 10,
-    name: 'Adult World Prep',
-    theme: 'What\'s coming next',
-    description: 'You\'re almost an adult. Here\'s what the real world looks like!',
-    startingMoney: 10000,
-    terms: ['Credit Score', 'Bank Charges', 'Service Fees', 'Taxes', 'Salary Slip', 'Internship Stipend', 'Freelance Earnings', 'Part-time Income', 'Financial Goals'],
-    badge: { name: 'Money-Ready Adult', emoji: '🏆', icon: Trophy },
-    xpReward: 1000,
-    scenarios: [
+      // From Level 10
       {
         id: 'salary-slip',
         title: 'Your First Job',
@@ -1729,73 +1292,73 @@ export const GAME_LEVELS: LevelData[] = [
             cost: 0,
             effect: 'neutral',
             outcome: 'Not cheating — deductions are standard. Ask HR to explain.',
-            mentorMessage: 'Always ask about CTC vs In-hand during job offers.',
+            mentorMessage: 'Gross vs Net salary — always clarify during job offers.',
             term: 'Salary Slip',
             termExplanation: 'A document showing your total earnings, deductions, and final take-home pay.'
           }
         ]
       },
       {
-        id: 'taxes',
-        title: 'The Tax Reality',
-        story: 'A portion of your salary goes to the government as Income Tax. It funds roads, schools, hospitals.',
-        icon: Home,
+        id: 'credit-score',
+        title: 'The Credit Mystery',
+        story: 'Your friend couldn\'t get a loan because of "bad credit score." What is this score?',
+        icon: Lock,
         choices: [
           {
-            id: 'accept-taxes',
-            text: 'Fair. I use public services too.',
+            id: 'understand-credit',
+            text: 'It\'s a rating that shows how trustworthy I am with borrowed money',
             cost: 0,
             effect: 'positive',
-            outcome: 'You understand taxes are part of being a responsible citizen.',
-            mentorMessage: 'Taxes are mandatory. Learn to plan and save legally on taxes.',
-            term: 'Taxes',
-            termExplanation: 'Money paid to the government from your income to fund public services.'
+            outcome: 'Correct! Banks use this to decide if they should lend to you.',
+            mentorMessage: 'Credit score is your financial reputation. Build it carefully.',
+            term: 'Credit Score',
+            termExplanation: 'A number (300-900) representing your reliability with credit and loans.'
           },
           {
-            id: 'resent-taxes',
-            text: 'That\'s my hard-earned money!',
+            id: 'ignore-credit',
+            text: 'I don\'t need loans, so I don\'t care',
             cost: 0,
             effect: 'neutral',
-            outcome: 'It is, but taxes are how societies function.',
-            mentorMessage: 'You can minimize tax legally through savings schemes. Learn about 80C!',
-            term: 'Taxes',
-            termExplanation: 'Money paid to the government from your income to fund public services.'
+            outcome: 'You might need credit someday for a home or emergency.',
+            mentorMessage: 'Credit score matters for major life purchases. Start building early.',
+            term: 'Credit Score',
+            termExplanation: 'A number (300-900) representing your reliability with credit and loans.'
           }
         ]
       },
       {
-        id: 'credit-score',
-        title: 'The Trust Score',
-        story: 'Banks check your "credit score" before giving loans. It shows if you repay on time.',
-        icon: Star,
+        id: 'taxes',
+        title: 'The Tax Surprise',
+        story: 'You earned ₹8 lakh this year. Government takes ₹52,500 as tax. Is this unfair?',
+        icon: Coins,
         choices: [
           {
-            id: 'care-about-score',
-            text: 'I should pay bills on time to build good score',
+            id: 'understand-taxes',
+            text: 'Taxes pay for roads, hospitals, schools. It\'s my contribution.',
             cost: 0,
             effect: 'positive',
-            outcome: 'Smart! Good credit score = easier loans, better rates.',
-            mentorMessage: 'Credit score is your financial reputation. Build it early, maintain it always.',
-            term: 'Credit Score',
-            termExplanation: 'A number that shows how trustworthy you are with credit and loans.'
+            outcome: 'Mature thinking! Taxes fund public services.',
+            mentorMessage: 'Taxes are mandatory and fund society. Learn to plan for them.',
+            term: 'Taxes',
+            termExplanation: 'Mandatory payments to government based on income, used for public services.'
           },
           {
-            id: 'ignore-score',
-            text: 'I don\'t take loans, doesn\'t matter',
+            id: 'avoid-taxes',
+            text: 'I\'ll find ways to avoid paying',
             cost: 0,
-            effect: 'neutral',
-            outcome: 'Someday you might need one for home, car, or business.',
-            mentorMessage: 'Even if you don\'t need loans now, your future self might.',
-            term: 'Credit Score',
-            termExplanation: 'A number that shows how trustworthy you are with credit and loans.'
+            effect: 'negative',
+            outcome: 'Tax avoidance is legal (within limits), but evasion is illegal.',
+            mentorMessage: 'Learn legal tax-saving methods. Evasion has serious consequences.',
+            term: 'Taxes',
+            termExplanation: 'Mandatory payments to government based on income, used for public services.'
           }
         ]
       },
       {
         id: 'bank-charges',
-        title: 'The Hidden Costs',
-        story: 'Your bank charged ₹150 for not maintaining minimum balance. You didn\'t know this rule.',
-        icon: AlertTriangle,
+        title: 'The Minimum Balance',
+        story: 'Your bank charged ₹150 for not maintaining minimum balance. You didn\'t know about this rule.',
+        icon: CreditCard,
         choices: [
           {
             id: 'learn-rules',
@@ -1879,7 +1442,7 @@ export const GAME_LEVELS: LevelData[] = [
   }
 ];
 
-// Badge definitions
+// Badge definitions - derived from levels
 export const BADGES: Badge[] = GAME_LEVELS.map(level => ({
   id: level.id,
   name: level.badge.name,
