@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useGameProgress } from '@/hooks/useGameProgress';
+import type { LevelProgress } from '@/types/gameProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Wallet, 
@@ -185,12 +187,13 @@ const SCENARIOS: Scenario[] = [
 export default function Level1FirstPayday() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthContext();
+  const { completeLevel } = useGameProgress();
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [money, setMoney] = useState(5000);
   const [phase, setPhase] = useState<'intro' | 'scenario' | 'outcome' | 'complete'>('intro');
   const [selectedChoice, setSelectedChoice] = useState<typeof SCENARIOS[0]['choices'][0] | null>(null);
   const [unlockedTerms, setUnlockedTerms] = useState<string[]>([]);
-  const [choices, setChoices] = useState<{ scenarioId: string; choiceId: string; effect: string }[]>([]);
+  const [choices, setChoices] = useState<{ scenarioId: string; choiceId: string; effect: 'positive' | 'neutral' | 'negative' }[]>([]);
 
   if (!isAuthenticated) {
     navigate('/');
@@ -200,6 +203,7 @@ export default function Level1FirstPayday() {
   const currentScenario = SCENARIOS[currentScenarioIndex];
   const positiveChoices = choices.filter(c => c.effect === 'positive').length;
   const score = Math.round((positiveChoices / SCENARIOS.length) * 100);
+  const xpEarned = positiveChoices * 100 + 400;
 
   const handleStartGame = () => {
     setPhase('scenario');
@@ -208,7 +212,11 @@ export default function Level1FirstPayday() {
   const handleChoice = (choice: typeof SCENARIOS[0]['choices'][0]) => {
     setSelectedChoice(choice);
     setMoney(prev => prev - choice.cost);
-    setChoices(prev => [...prev, { scenarioId: currentScenario.id, choiceId: choice.id, effect: choice.effect }]);
+    setChoices(prev => [...prev, { 
+      scenarioId: currentScenario.id, 
+      choiceId: choice.id, 
+      effect: choice.effect as 'positive' | 'neutral' | 'negative' 
+    }]);
     if (!unlockedTerms.includes(choice.term)) {
       setUnlockedTerms(prev => [...prev, choice.term]);
     }
@@ -221,12 +229,23 @@ export default function Level1FirstPayday() {
       setSelectedChoice(null);
       setPhase('scenario');
     } else {
+      // Complete Level 1 and save progress
+      const levelProgress: LevelProgress = {
+        levelId: 1,
+        completed: true,
+        score,
+        choicesMade: choices,
+        termsUnlocked: unlockedTerms,
+        moneyLeft: money,
+        xpEarned: Math.round(xpEarned)
+      };
+      completeLevel(1, levelProgress);
       setPhase('complete');
     }
   };
 
   const handleProceedToLevel2 = () => {
-    navigate('/training-mode');
+    navigate('/level/2');
   };
 
   const getBadge = () => {
@@ -493,9 +512,9 @@ export default function Level1FirstPayday() {
                 transition={{ delay: 0.4 }}
               >
                 <h2 className="text-2xl font-black text-gradient uppercase tracking-wider mb-1">
-                  Level Complete!
+                  Level 1 Complete!
                 </h2>
-                <p className="text-lg font-bold text-primary mb-4">{badge.name}</p>
+                <p className="text-lg font-bold text-primary mb-4">🏅 Money Explorer</p>
               </motion.div>
 
               {/* Stats */}
@@ -551,7 +570,7 @@ export default function Level1FirstPayday() {
                 transition={{ delay: 0.8 }}
               >
                 <Zap className="w-5 h-5 text-yellow-400" />
-                <span className="text-lg font-bold text-foreground">+{positiveChoices * 100} XP Earned</span>
+                <span className="text-lg font-bold text-foreground">+{xpEarned} XP Earned</span>
               </motion.div>
 
               <motion.button

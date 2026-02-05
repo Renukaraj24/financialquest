@@ -16,6 +16,7 @@ import SpendingWorthDashboard from "./pages/SpendingWorthDashboard";
 import GameModeScreen from "./pages/GameModeScreen";
 import TrainingModeScreen from "./pages/TrainingModeScreen";
 import Level1FirstPayday from "./pages/Level1FirstPayday";
+import Level2Page from "./pages/Level2Page";
 import GameDashboard from "./pages/GameDashboard";
 import BadgesDashboard from "./pages/BadgesDashboard";
 import TermsGlossary from "./pages/TermsGlossary";
@@ -47,6 +48,7 @@ const App = () => (
             {/* Game Dashboard & Levels */}
             <Route path="/dashboard" element={<GameDashboard />} />
             <Route path="/level-1" element={<Level1FirstPayday />} />
+            <Route path="/level/2" element={<Level2Page />} />
             <Route path="/level/:levelId" element={<LevelPage />} />
             <Route path="/badges" element={<BadgesDashboard />} />
             <Route path="/terms-glossary" element={<TermsGlossary />} />
