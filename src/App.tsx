@@ -47,10 +47,13 @@ const App = () => (
             
             {/* Game Dashboard & Levels */}
             <Route path="/dashboard" element={<GameDashboard />} />
+            {/* Specific level routes MUST come before the generic :levelId route */}
             <Route path="/level/1" element={<Level1FirstPayday />} />
-            <Route path="/level-1" element={<Level1FirstPayday />} />
             <Route path="/level/2" element={<Level2Page />} />
+            {/* Generic level route for levels 3-5 */}
             <Route path="/level/:levelId" element={<LevelPage />} />
+            {/* Legacy route */}
+            <Route path="/level-1" element={<Level1FirstPayday />} />
             <Route path="/badges" element={<BadgesDashboard />} />
             <Route path="/terms-glossary" element={<TermsGlossary />} />
             <Route path="/game-complete" element={<GameComplete />} />
