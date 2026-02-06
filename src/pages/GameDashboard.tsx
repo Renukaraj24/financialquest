@@ -34,6 +34,7 @@ export default function GameDashboard() {
 
   const handleLevelClick = (levelId: number) => {
     if (isLevelUnlocked(levelId)) {
+      // All levels now use /level/:id format
       navigate(`/level/${levelId}`);
     }
   };
