@@ -47,6 +47,7 @@ const App = () => (
             
             {/* Game Dashboard & Levels */}
             <Route path="/dashboard" element={<GameDashboard />} />
+            <Route path="/level/1" element={<Level1FirstPayday />} />
             <Route path="/level-1" element={<Level1FirstPayday />} />
             <Route path="/level/2" element={<Level2Page />} />
             <Route path="/level/:levelId" element={<LevelPage />} />
