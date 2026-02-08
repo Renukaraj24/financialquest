@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Trophy, Star, Zap, ChevronRight, Lock, CheckCircle,
-  Target, BookOpen, Award, Play
+  Target, BookOpen, Award, Play, MapPin
 } from 'lucide-react';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -196,6 +196,36 @@ export default function GameDashboard() {
             })}
           </div>
         </motion.div>
+
+        {/* Life City Unlock - Only show when all levels complete */}
+        {completedCount === totalLevels && (
+          <motion.div
+            className="game-card scanlines border-2 border-primary/50"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                <MapPin className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest text-primary">🎮 Bonus Unlocked!</p>
+                <h3 className="text-lg font-black text-gradient">Life City</h3>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3">
+              A real-time simulation game! Move around a city, manage money, eat, rest, and survive 7 days as a student.
+            </p>
+            <button
+              onClick={() => navigate('/life-city')}
+              className="btn-gradient w-full flex items-center justify-center gap-2"
+            >
+              <Play className="w-4 h-4" />
+              Enter Life City
+            </button>
+          </motion.div>
+        )}
 
         {/* Quick Links */}
         <motion.div 

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Trophy, Star, Zap, Award, BookOpen, Target, 
-  Sparkles, ChevronRight, Home, RotateCcw
+  Sparkles, ChevronRight, Home, RotateCcw, MapPin
 } from 'lucide-react';
 import { GameLayout } from '@/components/GameLayout';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -189,9 +189,24 @@ export default function GameComplete() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
+          {/* Life City - Featured Unlock */}
+          {isComplete && (
+            <button
+              onClick={() => navigate('/life-city')}
+              className="btn-gradient w-full flex items-center justify-center gap-2 py-4"
+            >
+              <MapPin className="w-5 h-5" />
+              <div className="text-left">
+                <p className="text-xs opacity-80">🎮 Bonus Unlocked!</p>
+                <p className="font-bold">Enter Life City</p>
+              </div>
+              <ChevronRight className="w-5 h-5 ml-auto" />
+            </button>
+          )}
+
           <button
             onClick={() => navigate('/dashboard')}
-            className="btn-gradient w-full flex items-center justify-center gap-2"
+            className="btn-outline-primary w-full flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
             Back to Dashboard

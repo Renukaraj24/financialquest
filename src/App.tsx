@@ -22,6 +22,7 @@ import BadgesDashboard from "./pages/BadgesDashboard";
 import TermsGlossary from "./pages/TermsGlossary";
 import LevelPage from "./pages/LevelPage";
 import GameComplete from "./pages/GameComplete";
+import LifeCityGame from "./pages/LifeCityGame";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,6 +58,7 @@ const App = () => (
             <Route path="/badges" element={<BadgesDashboard />} />
             <Route path="/terms-glossary" element={<TermsGlossary />} />
             <Route path="/game-complete" element={<GameComplete />} />
+            <Route path="/life-city" element={<LifeCityGame />} />
             
             {/* Legacy Game Modes */}
             <Route path="/blind-mode" element={<GameModeScreen mode="blind" />} />
