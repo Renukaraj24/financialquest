@@ -9,7 +9,7 @@ export default function LevelPage() {
   const { levelId } = useParams<{ levelId: string }>();
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthContext();
-  const { isLevelUnlocked } = useGameProgress();
+  const { isLevelUnlocked, isLoading } = useGameProgress();
   
   const levelNumber = parseInt(levelId || '1', 10);
   const levelData = getLevelById(levelNumber);
@@ -20,6 +20,9 @@ export default function LevelPage() {
       return;
     }
 
+    // Wait for progress to load before gating (prevents redirect loops)
+    if (isLoading) return;
+
     if (!levelData) {
       navigate('/dashboard');
       return;
@@ -29,9 +32,9 @@ export default function LevelPage() {
       navigate('/dashboard');
       return;
     }
-  }, [isAuthenticated, levelData, levelNumber, isLevelUnlocked, navigate]);
+  }, [isAuthenticated, isLoading, levelData, levelNumber, isLevelUnlocked, navigate]);
 
-  if (!levelData || !isAuthenticated) {
+  if (!levelData || !isAuthenticated || isLoading) {
     return null;
   }
 

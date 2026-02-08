@@ -48,17 +48,17 @@ const LEVEL_2_TERMS = [
 export default function Level2Page() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuthContext();
-  const { completeLevel, progress, isLevelUnlocked } = useGameProgress();
-  
+  const { completeLevel, progress, isLevelUnlocked, isLoading } = useGameProgress();
+
   // Get starting money from Level 1 completion or default
   const level1Progress = progress.levelProgress[1];
-  const startingMoney = level1Progress?.moneyLeft || 4000;
-  
+  const startingMoney = level1Progress?.moneyLeft ?? 4000;
+
   const [phase, setPhase] = useState<'intro' | 'allocate' | 'week' | 'event' | 'outcome' | 'growth' | 'complete'>('intro');
   const [currentWeek, setCurrentWeek] = useState(1);
   const [stress, setStress] = useState(20);
-  const [allocation, setAllocation] = useState<Allocation>({ wallet: startingMoney, safety: 0, growth: 0 });
-  const [totalMoney, setTotalMoney] = useState(startingMoney);
+  const [allocation, setAllocation] = useState<Allocation>(() => ({ wallet: startingMoney, safety: 0, growth: 0 }));
+  const [totalMoney, setTotalMoney] = useState(() => startingMoney);
   const [showGrowth, setShowGrowth] = useState(false);
   const [growthAmount, setGrowthAmount] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState<any>(null);
@@ -71,12 +71,36 @@ export default function Level2Page() {
       navigate('/');
       return;
     }
+
+    // Wait for progress to load before gating (prevents redirect loops)
+    if (isLoading) return;
+
     if (!isLevelUnlocked(2)) {
       navigate('/dashboard');
     }
-  }, [isAuthenticated, isLevelUnlocked, navigate]);
+  }, [isAuthenticated, isLoading, isLevelUnlocked, navigate]);
+
+  // Sync starting money after progress finishes loading (only if user hasn't started Level 2 yet)
+  useEffect(() => {
+    if (isLoading) return;
+    if (phase !== 'intro' || choices.length > 0 || currentWeek !== 1) return;
+
+    setAllocation({ wallet: startingMoney, safety: 0, growth: 0 });
+    setTotalMoney(startingMoney);
+  }, [isLoading, startingMoney, phase, choices.length, currentWeek]);
 
   if (!isAuthenticated) return null;
+
+  if (isLoading) {
+    return (
+      <GameLayout>
+        <div className="game-card scanlines max-w-lg mx-auto p-6 text-center">
+          <p className="text-sm text-muted-foreground">Loading Level 2…</p>
+        </div>
+      </GameLayout>
+    );
+  }
+
 
   const weekEvents: Record<number, { title: string; description: string; icon: React.ElementType; cost: number; term: string; termExplanation: string }> = {
     2: {
