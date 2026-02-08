@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  Trophy, Star, Zap, ChevronRight, Lock, CheckCircle, 
+import {
+  Trophy, Star, Zap, ChevronRight, Lock, CheckCircle,
   Target, BookOpen, Award, Play
 } from 'lucide-react';
 import { GameLayout } from '@/components/GameLayout';
@@ -12,12 +13,25 @@ import { Progress } from '@/components/ui/progress';
 
 export default function GameDashboard() {
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAuthContext();
-  const { progress, isLevelUnlocked, isLevelCompleted } = useGameProgress();
+  const { isAuthenticated, user, isLoading: authLoading } = useAuthContext();
+  const { progress, isLevelUnlocked, isLevelCompleted, isLoading: progressLoading } = useGameProgress();
 
-  if (!isAuthenticated) {
-    navigate('/');
-    return null;
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      navigate('/');
+    }
+  }, [authLoading, isAuthenticated, navigate]);
+
+  if (authLoading || progressLoading) {
+    return (
+      <GameLayout>
+        <div className="max-w-lg mx-auto">
+          <div className="game-card scanlines p-6 text-center">
+            <p className="text-sm text-muted-foreground">Loading your dashboard…</p>
+          </div>
+        </div>
+      </GameLayout>
+    );
   }
 
   const currentLevel = GAME_LEVELS.find(l => l.id === progress.currentLevel) || GAME_LEVELS[0];
